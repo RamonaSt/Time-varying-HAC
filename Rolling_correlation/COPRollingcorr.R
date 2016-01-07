@@ -9,8 +9,8 @@ lapply(libraries, function(x) if (!(x %in% installed.packages())) {
 })
 lapply(libraries, library, quietly = TRUE, character.only = TRUE)
 
-# prepare dates for the plot
-setwd("C:/Users/Ramona Steck/Documents/MA_final/MA_final/Masterarbeit/Data")
+# specify working directory and prepare dates for the plot
+# setwd("...")
 dates     = read.table("dates")
 dates     = dates[-c(1:5576), ]
 dates     = as.matrix(dates)
