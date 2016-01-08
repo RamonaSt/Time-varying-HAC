@@ -46,7 +46,7 @@ rm(list = ls(all = TRUE))
 graphics.off()
 
 # specify working directory and load results with pre-simulated critical values
-setwd("...")
+# setwd("...")
 AGumbel = read.table("AGumbel")
 
 # results adaptively simulated critical values
