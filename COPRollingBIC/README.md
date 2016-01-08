@@ -1,22 +1,24 @@
 
 [<img src="https://github.com/QuantLet/Styleguide-and-Validation-procedure/blob/master/pictures/banner.png" alt="Visit QuantNet">](http://quantlet.de/index.php?p=info)
 
-## [<img src="https://github.com/QuantLet/Styleguide-and-Validation-procedure/blob/master/pictures/qloqo.png" alt="Visit QuantNet">](http://quantlet.de/) **COPRollingcorr** [<img src="https://github.com/QuantLet/Styleguide-and-Validation-procedure/blob/master/pictures/QN2.png" width="60" alt="Visit QuantNet 2.0">](http://quantlet.de/d3/ia)
+## [<img src="https://github.com/QuantLet/Styleguide-and-Validation-procedure/blob/master/pictures/qloqo.png" alt="Visit QuantNet">](http://quantlet.de/) **COPRollingBIC** [<img src="https://github.com/QuantLet/Styleguide-and-Validation-procedure/blob/master/pictures/QN2.png" width="60" alt="Visit QuantNet 2.0">](http://quantlet.de/d3/ia)
 
 
 ```yaml
 
 
-Name of Quantlet: COPRollingcorr
+Name of Quantlet: COPRollingBIC
 
 Published in: Time-varying Hierarchical Archimedean Copulas Using Adaptively Simulated Critical Values
 
+Description: 'Plots the BIC calculated in a rolling window with r = 250 for hierarchical Archimedean 
+copula (HAC), Archimedean copula (AC) and Gauss copula. The HAC and AC are based on Gumbel generators. 
+In addition, the plot includes the dynamics of the parameters of HAC. It includes dots where the 
+structure of HAC changes and the L2 norm of the difference in the matrix of dependence parameters. 
+The data underlying the BIC are residuals from fitting GARCH(1,1) to log returns of DAX, Dow Jones and 
+Nikkei.'
 
-Description: 'Calculates and plots Kendalls tau and Pearsons correlation coefficient in a rolling window
-of m = 250 observations for the pairs of residuals from fitting GARCH(1,1) to the log returns of indices 
-(DAX, Dow Jones and Nikkei).'
-
-Keywords: Kendalls Tau, correlation, log-returns, plot, time varying
+Keywords: bic, copula, gumbel, HAC, nested Archimedean copula, plot
 
 See also: 
 
@@ -24,85 +26,56 @@ Author: [New] + Ramona Steck
 
 Submitted:  
 
-Datafile: eps, dates
+Datafile: BIC, dates
 
 Input: 
 
 Output:  
 
-Example: 
+Example:
 
 ```
 
 
-![Picture1](COPRollingcorr1.png)
-![Picture2](COPRollingcorr2.png)
+![Picture1](COPRollingBIC.png)
 
 
 ```R
-# clear all variables
+# clear all variables and close windows
 rm(list = ls(all = TRUE))
 graphics.off()
 
-# install and load packages
-libraries = c("zoo")
-lapply(libraries, function(x) if (!(x %in% installed.packages())) {
-    install.packages(x)
-})
-lapply(libraries, library, quietly = TRUE, character.only = TRUE)
-
-# specify working directory and prepare dates for the plot
+# specify working directory and load the data
 # setwd("...")
+BIC       = read.table("BIC")
+BIC       = as.matrix(BIC)
 dates     = read.table("dates")
-dates     = dates[-c(1:5576), ]
+dates     = dates[-c(1:5575), ]  
 dates     = as.matrix(dates)
 labels    = as.numeric(format(as.Date(dates, "%Y-%m-%d"), "%Y"))
 where.put = c(which(diff(labels) == 1) + 1)
 
-# residuals from fitting GARCH(1,1)
-eps = read.table("eps")
+# The plot
+par(mai = (c(0, 0.8, 0.1, 0.2) + 0.4), mgp = c(3, 0.5, 0))
+plot_colours = c("black", "red3", "blue3", "light grey")
+plot(BIC[, 3], pch = 15, xlab = "", ylab = "", ylim = c(0, 0.06), axes = FALSE, type = "l", col = plot_colours[4])
+axis(4, ylim = c(0, 0.06), col = plot_colours[4], col.axis = "light grey", las = 1, cex = 0.8, tck = -0.02)
+par(new = T)
+plot(BIC[, 1], xaxt = "n", type = "l", xlab = "", ylab = "BIC", ylim = c(-250, 25), pch = 21, col = plot_colours[1], 
+    las = 1, cex = 0.8, tck = -0.02)
 
-# Kendalls tau and Pearsons correlation coefficients using rolling window m = 250
-Pearson           = matrix(nrow = (nrow(eps) - 249), ncol = 3)
-Kendall           = matrix(nrow = (nrow(eps) - 249), ncol = 3)
-colnames(Pearson) = c("DDJ", "DN", "DJN")
-colnames(Kendall) = c("DDJ", "DN", "DJN")
+# points where changes in structure
+for (i in 2: dim(BIC)[1]) {
+    if (BIC[i, 2] != BIC[(i - 1), 2]) {
+        points(i, -250, pch = 19, col = "red")  
+    }
+}
+axis(1, at = where.put, labels = labels[where.put], cex = 0.8, tck = -0.02)
+lines(BIC[, 5], type = "l", pch = 22, lty = 2, lwd = 2, col = plot_colours[2])
+lines(BIC[, 4], type = "l", pch = 23, lty = 3, lwd = 2, col = plot_colours[3])
 
-DAXDJ        = eps[, 1:2]
-TS           = zoo(DAXDJ)
-Pearson[, 1] = rollapply(TS, width = 250, by = 1, function(TS) cor(TS[, 1], TS[, 2]), by.column = FALSE, 
-    align = "right")
-Kendall[, 1] = rollapply(TS, width = 250, by = 1, function(TS) cor(TS[, 1], TS[, 2], method = c("kendall")), 
-    by.column = FALSE, align = "right")
-
-DAXNI        = eps[, c(1, 3)]
-TS           = zoo(DAXNI)
-Pearson[, 2] = rollapply(TS, width = 250, by = 1, function(TS) cor(TS[, 1], TS[, 2]), by.column = FALSE, 
-    align = "right")
-Kendall[, 2] = rollapply(TS, width = 250, by = 1, function(TS) cor(TS[, 1], TS[, 2], method = c("kendall")), 
-    by.column = FALSE, align = "right")
-
-DJNI         = eps[, c(2, 3)]
-TS           = zoo(DJNI)
-Pearson[, 3] = rollapply(TS, width = 250, by = 1, function(TS) cor(TS[, 1], TS[, 2]), by.column = FALSE, 
-    align = "right")
-Kendall[, 3] = rollapply(TS, width = 250, by = 1, function(TS) cor(TS[, 1], TS[, 2], method = c("kendall")), 
-    by.column = FALSE, align = "right")
-
-# the plots
-par(mai = (c(0, 0.8, 0.1, 0.1) + 0.4), mgp = c(3, 0.5, 0))
-plot.colors = c("black", "red3", "blue3")
-
-matplot(Pearson, type = "l", lty = 1:3, col = plot.colors[1:3], lwd = 1, las = 1, axes = F, frame = T, 
-    ann = F)
-axis(1, at = where.put, labels = labels[where.put], tck = -0.02)
-axis(2, las = 1, tck = -0.02)
-mtext(side = 2, text = "Pearson's correlation", line = 3, cex = 1)
-
-matplot(Kendall, type = "l", lty = 1:3, col = plot.colors[1:3], lwd = 1, las = 1, axes = F, frame = T, 
-    ann = F)
-axis(1, at = where.put, labels = labels[where.put], tck = -0.02)
-axis(2, las = 1, tck = -0.02)
-mtext(side = 2, text = "Kendall's correlation", line = 3, cex = 1) 
+# add legend
+legend("topleft", c("HAC", "Gauss", "AC", expression("||X||"[2])), lty = 1:3, lwd = 2, col = plot_colours[1:4], 
+    cex = 0.8, ncol = 4) 
 
 ```
