@@ -1,14 +1,13 @@
 
-Name of Quantlet: COPlcpdiffMLI
+Name of Quantlet: COPlcpcompcv
 
 Published in: Time-varying Hierarchical Archimedean Copulas Using Adaptively Simulated Critical Values
 
-Description: 'Calculates and plots the no. of different test steps per time point for the two approaches 
-of LCP. The results from LCP correspond to the approach with pre-simulated critical values and the 
-approach with adaptively simulated critical values. In addition, the dynamics of the difference in the ML 
-criterion are plotted as well. The estimated model is a three-dimensional HAC with Gumbel generators.'
+Description: 'Plots the distribution of the adaptively simulated critical values around the respective 
+pre-simulated critical value for all test steps of LCP. The red points mark the pre-simulated critical 
+values.'
 
-Keywords: copula, gumbel, HAC, nested Archimedean copula, plot
+Keywords: copula, gumbel, HAC, nested Archimedean copula, critical-value, plot, boxplot
 
 See also: 
 
@@ -16,7 +15,7 @@ Author: [New] + Ramona Steck
 
 Submitted:  
 
-Datafile: AGumbel, BGumbel, dates
+Datafile: Acv, Bcv, qx
 
 Input: 
 
