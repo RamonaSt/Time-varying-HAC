@@ -1,0 +1,26 @@
+
+Name of Quantlet: COPlcpgraphs
+
+Published in: Time-varying Hierarchical Archimedean Copulas Using Adaptively Simulated Critical Values
+
+Description: 'Plots the dynamics of structure, the dependence parameters, ML and the length of the 
+intervals of homogeneity for the LCP estimation results based on pre-simulated critical values (on the 
+one hand) and adaptively simulated critical values (on the other hand). The estimated model is a 
+three-dimensional HAC with Gumbel generators. The underlying data corresponds to residuals from fitting 
+GARCH (1,1) to log returns of DAX, Dow Jones and Nikkei.'
+
+Keywords: copula, gumbel, HAC, nested Archimedean copula, plot
+
+See also: 
+
+Author: Ostap Okhrin, Simon Trimborn, [New] + Ramona Steck
+
+Submitted:  
+
+Datafile: AGumbel, BGumbel, dates, global.taus
+
+Input: 
+
+Output:  
+
+Example: 
