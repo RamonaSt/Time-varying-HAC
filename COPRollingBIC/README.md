@@ -70,6 +70,7 @@ for (i in 2: dim(BIC)[1]) {
         points(i, -250, pch = 19, col = "red")  
     }
 }
+
 axis(1, at = where.put, labels = labels[where.put], cex = 0.8, tck = -0.02)
 lines(BIC[, 5], type = "l", pch = 22, lty = 2, lwd = 2, col = plot_colours[2])
 lines(BIC[, 4], type = "l", pch = 23, lty = 3, lwd = 2, col = plot_colours[3])
