@@ -1,0 +1,27 @@
+
+Name of Quantlet: COPRollingBIC
+
+Published in: Time-varying Hierarchical Archimedean Copulas Using Adaptively Simulated Critical Values
+
+Description: 'Plots the BIC calculated in a rolling window with r = 250 for hierarchical Archimedean 
+copula (HAC), Archimedean copula (AC) and Gauss copula. The HAC and AC are based on Gumbel generators. 
+In addition, the plot includes the dynamics of the parameters of HAC. It includes dots where the 
+structure of HAC changes and the L2 norm of the difference in the matrix of dependence parameters. 
+The data underlying the BIC are residuals from fitting GARCH(1,1) to log returns of DAX, Dow Jones and 
+Nikkei.'
+
+Keywords: bic, copula, gumbel, HAC, nested Archimedean copula, plot
+
+See also: 
+
+Author: [New] + Ramona Steck
+
+Submitted:  
+
+Datafile: BIC, dates
+
+Input: 
+
+Output:  
+
+Example: 
