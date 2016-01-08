@@ -118,11 +118,11 @@ plot.MLI = function(A) {
     axis(1, at = where.put, labels = labels[where.put], tck = -0.02, cex.axis = 0.6)
 }
 
-# call the plot for pre-simul cv's
+# call the plot for pre-simulated critical values
 plot.param(AGumbel)
 plot.MLI(AGumbel)
 
-# call the plot for adapt cv's
+# call the plot for adaptively simulated critical values
 plot.param(BGumbel)
 plot.MLI(BGumbel) 
 
