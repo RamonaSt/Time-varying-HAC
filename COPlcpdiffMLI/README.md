@@ -37,7 +37,7 @@ Example:
 ```
 
 
-![Picture1](COPlcpdiffMLI1.png)
+![Picture1](COPlcpdiffMLI.png)
 
 
 ```R
