@@ -1,23 +1,20 @@
 
 [<img src="https://github.com/QuantLet/Styleguide-and-Validation-procedure/blob/master/pictures/banner.png" alt="Visit QuantNet">](http://quantlet.de/index.php?p=info)
 
-## [<img src="https://github.com/QuantLet/Styleguide-and-Validation-procedure/blob/master/pictures/qloqo.png" alt="Visit QuantNet">](http://quantlet.de/) **COPlcpdiffMLI** [<img src="https://github.com/QuantLet/Styleguide-and-Validation-procedure/blob/master/pictures/QN2.png" width="60" alt="Visit QuantNet 2.0">](http://quantlet.de/d3/ia)
+## [<img src="https://github.com/QuantLet/Styleguide-and-Validation-procedure/blob/master/pictures/qloqo.png" alt="Visit QuantNet">](http://quantlet.de/) **COPlcpcompcv** [<img src="https://github.com/QuantLet/Styleguide-and-Validation-procedure/blob/master/pictures/QN2.png" width="60" alt="Visit QuantNet 2.0">](http://quantlet.de/d3/ia)
 
 
 ```yaml
 
-
-
-Name of Quantlet: COPlcpdiffMLI
+Name of Quantlet: COPlcpcompcv
 
 Published in: Time-varying Hierarchical Archimedean Copulas Using Adaptively Simulated Critical Values
 
-Description: 'Calculates and plots the no. of different test steps per time point for the two approaches 
-of LCP. The results from LCP correspond to the approach with pre-simulated critical values and the 
-approach with adaptively simulated critical values. In addition, the dynamics of the difference in the ML 
-criterion are plotted as well. The estimated model is a three-dimensional HAC with Gumbel generators.'
+Description: 'Plots the distribution of the adaptively simulated critical values around the respective 
+pre-simulated critical value for all test steps of LCP. The red points mark the pre-simulated critical 
+values.'
 
-Keywords: copula, gumbel, HAC, nested Archimedean copula, plot
+Keywords: copula, gumbel, HAC, nested Archimedean copula, critical-value, plot, boxplot
 
 See also: 
 
@@ -25,7 +22,7 @@ Author: [New] + Ramona Steck
 
 Submitted:  
 
-Datafile: AGumbel, BGumbel, dates
+Datafile: Acv, Bcv, qx
 
 Input: 
 
@@ -37,7 +34,10 @@ Example:
 ```
 
 
-![Picture1](COPlcpdiffMLI.png)
+![Picture1](COPlcpcompcv1.png)
+![Picture2](COPlcpcompcv2.png)
+![Picture3](COPlcpcompcv3.png)
+![Picture4](COPlcpcompcv4.png)
 
 
 ```R
@@ -45,60 +45,60 @@ Example:
 rm(list = ls(all = TRUE))
 graphics.off()
 
-# specify working directory and load results with pre-simulated critical values
+# install and load packages
+libraries = c("copula")
+lapply(libraries, function(x) if (!(x %in% installed.packages())) {
+    install.packages(x)
+})
+lapply(libraries, library, quietly = TRUE, character.only = TRUE)
+
+# specify working directory and load chosen pre-simulated critical values
 # setwd("...")
-AGumbel = read.table("AGumbel")
+Acv = read.table("Acv")
+Acv = as.matrix(Acv)
 
-# results adaptively simulated critical values
-BGumbel = read.table("BGumbel")
+# adaptively simulated critical values
+Bcv = read.table("Bcv")
+Bcv = as.matrix(Bcv)
 
-# dates
-dates     = read.table("dates")
-dates     = dates[-c(1:5793), ]
-dates     = as.matrix(dates)
-labels    = as.numeric(format(as.Date(dates, "%Y-%m-%d"), "%Y"))
-where.put = c(which(diff(labels) == 1) + 1)
+# critical value curves (pre-simulated)
+qx = read.table("qx")
+qx = as.matrix(qx)
 
-a = c(1:9)
-g = c(1:9)
-for (k in 0:8) {
-    g[k + 1] = trunc(40 * 1.25^k)
-}
+Ak_max = 10
 
-# no. of conducted test steps at corresponding timepoint for pre-simulated critical values
-tstep = matrix(0, nrow = dim(AGumbel)[1], ncol = 1)
-for (i in 1:dim(AGumbel)[1]) {
-    for (j in 1:9) {
-        if (AGumbel[i, 1] == g[j]) {
-            tstep[i] = (a[j] + 1)
+# boxplots in order to see how critical values are spread out
+g = matrix(nrow = dim(Acv)[1], ncol = 10)
+for (k in 1:Ak_max) {
+    for (i in 1:dim(Acv)[1]) {
+        for (j in 1:10) {
+            if (is.na(Acv[i, k]) == TRUE) {
+                g[i, k] = "NA"
+            }
+            if (is.na(Acv[i, k]) != TRUE) {
+                if (Acv[i, k] == qx[j, k]) {
+                  g[i, k] = rownames(qx)[j]
+                }
+            }
         }
     }
 }
 
-# no. of conducted test steps at corresponding timepoint for adaptively simulated critical values
-tstep1 = matrix(0, nrow = dim(AGumbel)[1], ncol = 1)
-for (i in 1:dim(AGumbel)[1]) {
-    for (j in 1:9) {
-        if (BGumbel[i, 1] == g[j]) {
-            tstep1[i] = (a[j] + 1)
-        }
-    }
-}
+labels = c(expression(xi[1], xi[2], xi[3], xi[4], xi[5], xi[6], xi[7], xi[8]))
 
-# differences of no. of test steps and ML for the two approaches
-diff.test = tstep - tstep1
-diff.ml   = AGumbel[, 5] - BGumbel[, 5]
-
-# the plots
-layout(matrix(1:2, nrow = 2, byrow = T))
-par(mai = (c(0, 0.8, -0.3, 0.1) + 0.4), mgp = c(3, 0.3, 0))
-plot(diff.test, type = "l", lwd = 1, col = "blue3", lty = "solid", axes = F, frame = T, xlab = "", ylab = "D.steps", 
-    cex.lab = 1, yaxt = "n", xaxt = "n")
-axis(2, tck = -0.02, las = 1, cex.axis = 1)
-axis(1, at = where.put, labels = labels[where.put], tck = -0.02, cex.axis = 1)
-plot(diff.ml, type = "l", lwd = 1, col = "red3", lty = "solid", axes = F, frame = T, xlab = "", ylab = "D.ML", 
-    cex.lab = 1, yaxt = "n", xaxt = "n")
-axis(2, tck = -0.02, las = 1, cex.axis = 1)
-axis(1, at = where.put, labels = labels[where.put], tck = -0.02, cex.axis = 1) 
+for (i in 1:8) {
+    B = cbind(Acv[, i], Bcv[, i])
+    B = round(B, 2)
+    f = as.numeric(g[, i])
+    B = cbind(B, f)
+    par(mai = (c(0.8, 0.8, 0.1, 0.2) + 0.4), mgp = c(3, 1, 0))
+    box1 = boxplot(B[, 2] ~ B[, 3], data = B, varwidth = TRUE, names, xlab = "", ylab = "", axes = T, 
+        frame = T, las = 1)
+    values = table(B[, 1])
+    values = row.names(values)
+    points(values, col = "red3", pch = 18)
+    mtext(side = 2, text = labels[i], line = 3, cex = 1.2)
+    mtext(side = 1, text = "Parameter constellation", line = 3, cex = 1)
+} 
 
 ```
