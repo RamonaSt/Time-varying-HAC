@@ -1,26 +1,19 @@
 
 ![http://quantnet.wiwi.hu-berlin.de/style/banner.png](http://quantnet.wiwi.hu-berlin.de/style/banner.png)
 
-## ![qlogo](http://quantnet.wiwi.hu-berlin.de/graphics/quantlogo.png) **[bestglm_lambda_down](https://github.com/QuantLet/big_data_analysis/tree/master/GoogleCorrelateWords_and_FRMcomparison)**
+## ![qlogo](http://quantnet.wiwi.hu-berlin.de/graphics/quantlogo.png) **[COPRollingcorr](https://github.com/RamonaSt/Time-varying-HAC/tree/master/COPRollingcorr)**
 
-## ![qlogo](http://quantnet.wiwi.hu-berlin.de/graphics/quantlogo.png) **[Tree_OJ](https://github.com/QuantLet/big_data_analysis/tree/master/TreeModel)**
+## ![qlogo](http://quantnet.wiwi.hu-berlin.de/graphics/quantlogo.png) **[COPRollingBIC](https://github.com/RamonaSt/Time-varying-HAC/tree/master/COPRollingBIC)**
 
-## ![qlogo](http://quantnet.wiwi.hu-berlin.de/graphics/quantlogo.png) **[Unemployment_Google_vs_Official](https://github.com/QuantLet/big_data_analysis/tree/master/Unemployment_Google_vs_Official)**
+## ![qlogo](http://quantnet.wiwi.hu-berlin.de/graphics/quantlogo.png) **[COPlcpgraphs](https://github.com/RamonaSt/Time-varying-HAC/tree/master/COPlcpgraphs)**
 
-## ![qlogo](http://quantnet.wiwi.hu-berlin.de/graphics/quantlogo.png) **[Unemploymentrate_jobagency_comparison](https://github.com/QuantLet/big_data_analysis/tree/master/Unemploymentrate_jobagency_comparison)**
+## ![qlogo](http://quantnet.wiwi.hu-berlin.de/graphics/quantlogo.png) **[COPlcpdiffMLI](https://github.com/RamonaSt/Time-varying-HAC/tree/master/COPlcpdiffMLI)**
+
+## ![qlogo](http://quantnet.wiwi.hu-berlin.de/graphics/quantlogo.png) **[COPlcpcompcv](https://github.com/RamonaSt/Time-varying-HAC/tree/master/COPlcpcompcv)**
 
 ### Abstract of the work:
-In times, where we collect more and more data about individuals, it makes sense to use these for economic research.
-Publications with the title „Big Data“ are growing since years. 
-This Paper describes the current state of research and shows which steps are necessary to work with unstructured and high dimensional data.
-Therefore, methods for data structuring will be shown and evaluated. Statistical techniques will be described and used with different datasets.
-The aim is to show, that simple time-series models are enough to show the usefulness of simple collected datasets for economic indicators.
-It is also shown, that, if we have unlimited amount of potential regressors, it is possible to get correlations without any causal relation.
-It is the useful selection on big data what is the most difficult part in that state of research.
+Since recent history has shown that financial crises erupting in one market are likely to spill over to other markets, the analysis of financial contagion attained greater attention. Moreover, there is a common notion among researchers that dependence between financial time series is subject to structural changes. In this paper, financial contagion is modelled by means of hierarchical Archimedean copulas (HAC) for the US, the German and the Japanese stock market. The time-varying nature of the copula parameters is induced by adopting the local parametric approach introduced in Spokoiny (1998) and applied in Härdle et al. (2010). In the latter research paper, the critical values for the sequential testing procedure underlying this approach are simulated on the basis of some predefined copula parameter constellations. However, it is known that the underlying parameter constellations drive the critical values. The contribution of this paper is the adaptive simulation of the critical values according to the true parameter constellations. In this way, this paper aims at refining the estimation method conducted in Härdle et al. (2010). It can be seen that the estimation results differ substantially as one simulates the critical values by means of the true parameter constellations. 
 
 
-### Here you see some plots from this repository:
 
-![Picture1](https://github.com/QuantLet/big_data_analysis/blob/master/GoogleCorrelateWords_and_FRMcomparison/bestglm_lambda_down1.png)
-![Picture2](https://github.com/QuantLet/big_data_analysis/blob/master/Unemployment_Google_vs_Official/Unemployment_Google_vs_Official.png)
-![Picture3](https://github.com/QuantLet/big_data_analysis/blob/master/GoogleCorrelateWords_and_FRMcomparison/bestglm_lambda_down3.png)
+
